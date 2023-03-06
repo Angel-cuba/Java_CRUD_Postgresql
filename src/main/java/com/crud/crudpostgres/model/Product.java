@@ -2,17 +2,28 @@ package com.crud.crudpostgres.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table
 public class Product {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   private String name;
-  private String price;
+  private float price;
   private LocalDate date;
   private int antiquity;
 
   public Product() {
   }
 
-  public Product(long id, String name, String price, LocalDate date, int antiquity) {
+  public Product(long id, String name, Float price, LocalDate date, int antiquity) {
     this.id = id;
     this.name = name;
     this.price = price;
@@ -36,11 +47,12 @@ public class Product {
     this.name = name;
   }
 
-  public String getPrice() {
+ 
+  public float getPrice() {
     return price;
-  } 
+  }
 
-  public void setPrice(String price) {
+  public void setPrice(float price) {
     this.price = price;
   }
 
