@@ -10,4 +10,6 @@ public class CrudpostgresApplication {
 		SpringApplication.run(CrudpostgresApplication.class, args);
 	}
 
+	
+
 }
