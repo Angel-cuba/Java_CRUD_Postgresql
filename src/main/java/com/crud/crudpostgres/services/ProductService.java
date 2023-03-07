@@ -36,4 +36,16 @@ public class ProductService {
       return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
   }
+
+
+  public ResponseEntity<Product> deleteProduct(long id) {
+    Optional<Product> exist = productRepository.findById(id);
+
+    if (!exist.isPresent()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    } else {
+      productRepository.deleteById(id);
+      return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+  }
 }
