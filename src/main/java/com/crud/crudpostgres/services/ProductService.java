@@ -1,6 +1,5 @@
 package com.crud.crudpostgres.services;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,17 +23,17 @@ public class ProductService {
 
   public ResponseEntity<Product> saveProduct(Product product) {
     Optional<Product> exist = productRepository.findByName(product.getName());
-    HashMap<String, Object> res = new HashMap<>();
 
-
-    if (exist.isPresent() && product.getId() != exist.get().getId()) {
-      res.put("error", true);
-      res.put("message", "Product already exists");
-      return new ResponseEntity<>(HttpStatus.CONFLICT);
+   if (exist.isPresent()) {
+      return new ResponseEntity<>(HttpStatus.FOUND);
     }
-    productRepository.save(product);
-    res.put("data", product);
-    res.put("message", "Product created successfully");
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
+  
+    if(product.getId() > 0) {
+      productRepository.save(product);
+      return new ResponseEntity<>(product, HttpStatus.ACCEPTED);
+    } else{
+      productRepository.save(product);
+      return new ResponseEntity<>(product, HttpStatus.CREATED);
+    }
   }
 }
