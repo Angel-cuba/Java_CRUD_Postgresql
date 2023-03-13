@@ -21,6 +21,16 @@ public class ProductService {
     return productRepository.findAll();
   }
 
+  public ResponseEntity<Product> getProductById(long id) {
+    Optional<Product> exist = productRepository.findById(id);
+
+    if (!exist.isPresent()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    } else {
+      return exist.map(product -> new ResponseEntity<>(product, HttpStatus.FOUND)).get();
+    }
+  }
+
   public ResponseEntity<Product> saveProduct(Product product) {
     Optional<Product> exist = productRepository.findByName(product.getName());
 

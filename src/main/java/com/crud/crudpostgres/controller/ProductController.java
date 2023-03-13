@@ -30,6 +30,16 @@ public class ProductController {
     return productService.getProducts();
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<Product> getProductById(@PathVariable long id) {
+      ResponseEntity<Product> existingProduct = productService.getProductById(id);
+
+    if(existingProduct == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
+    }
+    return existingProduct;
+    }
+
   @PostMapping("/create")
   public ResponseEntity<String> createProduct(@RequestBody Product product) {
    productService.saveProduct(product);
