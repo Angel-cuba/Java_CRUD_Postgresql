@@ -32,14 +32,13 @@ public class ProductService {
   }
 
   public ResponseEntity<Product> saveProduct(Product product) {
-    Optional<Product> exist = productRepository.findByName(product.getName());
-
-   if (exist.isPresent()) {
-      return new ResponseEntity<>(HttpStatus.FOUND);
-    }
+    Product exist = productRepository.findById(product.getId()).orElse(null);
   
-    if(product.getId() > 0) {
-      productRepository.save(product);
+    if(exist != null) {
+      exist.setName(product.getName());
+      exist.setPrice(product.getPrice());
+      exist.setDate(product.getDate());
+      productRepository.save(exist);
       return new ResponseEntity<>(product, HttpStatus.ACCEPTED);
     } else{
       productRepository.save(product);
