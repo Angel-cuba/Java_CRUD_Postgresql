@@ -1,5 +1,6 @@
 package com.crud.crudpostgres.auth;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,14 +21,15 @@ public class AuthService {
 
   private final PasswordEncoder passwordEncoder;
   
+  @Autowired
   private JwtService jwtService;
 
   private final AuthenticationManager authenticationManager;
   
   public AuthenticationResponse register(RegisterRequest registerRequest) {
     var user = User.builder()
-      .name(registerRequest.getFistname())
-      .lastName(registerRequest.getLastname())
+      .firstname(registerRequest.getFistname())
+      .lastname(registerRequest.getLastname())
       .email(registerRequest.getEmail())
       .password(passwordEncoder.encode(registerRequest.getPassword()))
       .role(Role.USER)
